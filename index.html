@@ -1,177 +1,222 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Екатерина — Junior Fullstack & AI Developer</title>
-<meta name="description" content="Портфолио: Python, React, AI-агенты, автоматизация. Удалённая работа.">
-<style>
-  :root{
-    --bg:#0f0f14; --card:#17171f; --text:#f5f5f7; --muted:#a0a0b0;
-    --accent:#7c6cff; --accent2:#00e0a4; --border:#262633;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',Arial,sans-serif;line-height:1.6}
-  .container{max-width:1000px;margin:0 auto;padding:0 20px}
-  header{position:sticky;top:0;background:rgba(15,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:10}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1000px;margin:0 auto;flex-wrap:wrap;gap:10px}
-  .logo{font-weight:700;letter-spacing:1px;color:var(--text);text-decoration:none}
-  .logo span{color:var(--accent)}
-  .nav-links{display:flex;gap:18px;flex-wrap:wrap}
-  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
-  .nav-links a:hover{color:var(--text)}
-  .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:600;transition:transform .2s, box-shadow .2s}
-  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,108,255,.35)}
-  .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
-  .hero{padding:90px 0 60px}
-  .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,224,164,.1);color:var(--accent2);border:1px solid rgba(0,224,164,.3);padding:6px 14px;border-radius:999px;font-size:13px;margin-bottom:22px}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  h1{font-size:clamp(34px,6vw,56px);line-height:1.15;margin-bottom:14px}
-  h1 .accent{color:var(--accent)}
-  .subtitle{color:var(--muted);font-size:clamp(16px,2.4vw,20px);max-width:640px;margin-bottom:30px}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-  section{padding:50px 0}
-  .section-num{color:var(--accent);font-size:14px;letter-spacing:2px;margin-bottom:8px}
-  h2{font-size:clamp(24px,4vw,34px);margin-bottom:24px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:18px;transition:transform .25s, border-color .25s, opacity .5s}
-  .card.pre{opacity:0;transform:translateY(24px)}
-  .card.visible{opacity:1;transform:translateY(0)}
-  .card:hover{border-color:var(--accent)}
-  .card h3{margin-bottom:10px;font-size:20px}
-  .card p{color:var(--muted);font-size:15px;margin-bottom:14px}
-  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-  .tag{background:rgba(124,108,255,.12);color:var(--accent);border:1px solid rgba(124,108,255,.3);padding:4px 12px;border-radius:999px;font-size:12px}
-  .card a{color:var(--accent2);text-decoration:none;font-size:14px;font-weight:600}
-  .card a:hover{text-decoration:underline}
-  .note{border-left:3px solid var(--accent);background:var(--card);padding:22px 26px;border-radius:0 14px 14px 0;color:var(--muted)}
-  .note strong{color:var(--text)}
-  .stack{display:flex;flex-wrap:wrap;gap:10px}
-  .stack .tag{font-size:14px;padding:8px 16px}
-  footer{border-top:1px solid var(--border);padding:40px 0;margin-top:40px}
-  .footer-links{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px}
-  .footer-links a{color:var(--muted);text-decoration:none}
-  .footer-links a:hover{color:var(--text)}
-  @media(max-width:600px){.hero{padding:60px 0 40px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екатерина | Junior Frontend / QA / Data / AI Specialist</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<header>
-  <nav>
-    <a class="logo" href="#top">EKATERINA<span>.DEV</span></a>
-    <div class="nav-links">
-      <a href="#about">Обо мне</a>
-      <a href="#projects">Проекты</a>
-      <a href="#stack">Стек</a>
-      <a href="#ai">Подход к AI</a>
-      <a href="#contacts">Контакты</a>
-    </div>
-    <a class="btn" href="https://t.me/katenka74" target="_blank">Написать в Telegram</a>
-  </nav>
-</header>
-
-<main class="container" id="top">
-  <div class="hero">
-    <div class="badge"><span class="dot"></span> Открыта к предложениям · удалённо</div>
-    <h1>Екатерина<br><span class="accent">Junior Fullstack &amp; AI Developer</span></h1>
-    <p class="subtitle">Создаю веб-приложения на React, пишу автоматизацию на Python и внедряю ИИ-агентов, которые экономят часы ручного труда.</p>
-    <div class="hero-actions">
-      <a class="btn" href="https://t.me/katenka74" target="_blank">Обсудить задачу</a>
-      <a class="btn ghost" href="https://github.com/ekaterina7411" target="_blank">Мой GitHub</a>
-    </div>
-  </div>
-
-  <section id="about">
-    <div class="section-num">01</div>
-    <h2>Обо мне и формат работы</h2>
-    <div class="note">
-      <p>Из-за врождённой особенности я общаюсь и работаю <strong>исключительно в текстовом формате</strong>: мессенджеры, почта, таск-трекеры, код-ревью. Я не совершаю и не принимаю телефонные звонки.</p>
-      <p style="margin-top:10px">Для меня это профессиональный стандарт: чёткие формулировки, подробная документация решений и ноль пустых разговоров — всё время уходит на код и результат.</p>
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="section-num">02</div>
-    <h2>Избранные проекты</h2>
-
-    <div class="card">
-      <h3>🤖 ИИ-агент для обработки заявок</h3>
-      <div class="tags"><span class="tag">Python</span><span class="tag">LLM API</span><span class="tag">json / re</span><span class="tag">Prompt Engineering</span></div>
-      <p>Превращает неструктурированный текст клиентов в строгий JSON для CRM. Системный промпт требует только валидный JSON; пост-обработка чистит markdown-обёртки модели; try/except ловит «галлюцинации», чтобы пайплайн не падал.</p>
-      <a href="https://gist.github.com/ekaterina7411/ae708ebfa5f540f41f367d157c2a437a" target="_blank">Смотреть код →</a>
+    <!-- Экран загрузки -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <p class="preloader-text">Загрузка</p>
+            <div class="preloader-bar">
+                <div class="preloader-fill" id="preloaderFill"></div>
+            </div>
+            <p class="preloader-percent" id="preloaderPercent">0%</p>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>🔗 Интеграция откликов HH.ru → Битрикс24</h3>
-      <div class="tags"><span class="tag">Python</span><span class="tag">REST API</span><span class="tag">hashlib</span><span class="tag">ООП</span></div>
-      <p>Автоматическое создание лидов в CRM с защитой от дублей: контакты нормализуются и хэшируются (md5), поэтому дубликат ловится даже при разных форматах номера — «8-916-…» и «+7916…».</p>
-      <a href="https://gist.github.com/ekaterina7411/8bb5a2a3c79db7f541e5409c3d8c560a" target="_blank">Смотреть код →</a>
-    </div>
+    <!-- Полоса прогресса прокрутки -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-    <div class="card">
-      <h3>🎨 Генератор схем для выкладки</h3>
-      <div class="tags"><span class="tag">React</span><span class="tag">Canvas API</span><span class="tag">JavaScript ES6+</span></div>
-      <p>Интерактивный редактор: зум, история действий (undo/redo), ластик. Алгоритм анализирует изображение, классифицирует элементы и формирует спецификацию с расчётом стоимости и экспортом в PDF.</p>
-      <a href="https://t.me/katenka74" target="_blank">Запросить демо →</a>
-    </div>
+    <!-- Кастомный курсор -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
 
-    <div class="card">
-      <h3>🛒 Интернет-магазин</h3>
-      <div class="tags"><span class="tag">React</span><span class="tag">Hooks</span><span class="tag">CSS3 Grid/Flex</span></div>
-      <p>Фронтенд e-commerce: каталог, умная фильтрация, корзина с сохранением состояния и динамический калькулятор доставки. Полностью адаптивная вёрстка.</p>
-      <a href="https://t.me/katenka74" target="_blank">Запросить демо →</a>
-    </div>
-  </section>
+    <!-- Еле заметный код на ВСЮ страницу, течёт снизу вверх -->
+    <div class="code-bg" aria-hidden="true"></div>
 
-  <section id="stack">
-    <div class="section-num">03</div>
-    <h2>Технологический стек</h2>
-    <div class="stack">
-      <span class="tag">Python</span><span class="tag">JavaScript ES6+</span><span class="tag">React</span>
-      <span class="tag">HTML5 / CSS3</span><span class="tag">Canvas API</span><span class="tag">REST API</span>
-      <span class="tag">JSON</span><span class="tag">Git / GitHub</span><span class="tag">Claude API</span>
-      <span class="tag">Prompt Engineering</span><span class="tag">Flask (базово)</span>
-    </div>
-  </section>
+    <!-- Живой код по краям экрана -->
+    <div class="code-rain code-rain-left" aria-hidden="true"></div>
+    <div class="code-rain code-rain-right" aria-hidden="true"></div>
 
-  <section id="ai">
-    <div class="section-num">04</div>
-    <h2>Мой подход к AI и вайбкодингу</h2>
-    <div class="note">
-      <p>Я использую нейросети (Claude, Cursor) как <strong>со-пилота, а не как замену мышлению</strong>. Ставлю чёткую задачу → AI предлагает каркас → я построчно разбираю, понимаю и тестирую код.</p>
-      <p style="margin-top:10px"><strong>Моё правило:</strong> я всегда знаю, что делает каждая строка моего проекта. Если не могу объяснить кусок кода — переписываю, пока не пойму. Проверяю граничные случаи и валидирую данные до того, как на ошибке споткнётся пользователь.</p>
-    </div>
-  </section>
+    <nav class="navbar">
+        <div class="logo magnetic">EKATERINA.</div>
+        <ul class="nav-links">
+            <li><a href="#about">Обо мне</a></li>
+            <li><a href="#skills">Навыки</a></li>
+            <li><a href="#projects">Проекты</a></li>
+            <li><a href="#why">Почему я</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+    </nav>
 
-  <section id="contacts">
-    <div class="section-num">05</div>
-    <h2>Контакты</h2>
-    <p style="color:var(--muted);max-width:640px">Готова выполнить тестовое задание, чтобы подтвердить навыки на практике. Отвечаю в переписке быстро и по делу.</p>
-    <div class="hero-actions" style="margin-top:20px">
-      <a class="btn" href="https://t.me/katenka74" target="_blank">Telegram: @katenka74</a>
-      <a class="btn ghost" href="https://github.com/ekaterina7411" target="_blank">GitHub: ekaterina7411</a>
-    </div>
-  </section>
-</main>
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-photo">
+                <img src="photo.jpg" alt="Екатерина" onerror="this.closest('.hero-photo').style.display='none'">
+            </div>
+            <div class="hero-text">
+                <p class="greeting magnetic">Привет, я</p>
+                <h1 class="name">Екатерина</h1>
+                <h2 class="title magnetic">Junior Frontend / QA / Data / AI</h2>
+                <p class="description">
+                    Превращаю хаос в структуру. Автоматизирую рутину с помощью Python и AI,
+                    нахожу критические баги до того, как их найдут пользователи, и собираю
+                    аккуратные интерфейсы — от разметки до анимаций.
+                </p>
+                <div class="hero-badges">
+                    <span class="badge magnetic">🎨 Frontend</span>
+                    <span class="badge magnetic">🐍 Python</span>
+                    <span class="badge magnetic">🤖 AI & LLM</span>
+                    <span class="badge magnetic">🔍 QA & Testing</span>
+                    <span class="badge magnetic">📊 Data Analysis</span>
+                </div>
+                <a href="#projects" class="btn-primary magnetic">Смотреть проекты →</a>
+            </div>
+        </div>
+    </header>
 
-<footer>
-  <div class="container">
-    <p style="color:var(--muted);font-size:14px">© 2026 Екатерина · Junior Fullstack &amp; AI Developer · Свёрстано вручную: HTML + CSS + JS</p>
-    <div class="footer-links">
-      <a href="https://t.me/katenka74" target="_blank">Telegram</a>
-      <a href="https://github.com/ekaterina7411" target="_blank">GitHub</a>
-      <a href="#top">Наверх ↑</a>
-    </div>
-  </div>
-</footer>
+    <section id="about" class="section">
+        <h2 class="section-title magnetic">Обо мне</h2>
+        <div class="about-content">
+            <p>
+                Я self-directed специалист: Junior Frontend, QA и Data/AI в одном человеке.
+                Не прохожу платные курсы, а осваиваю технологии через реальные проекты и практику.
+                Моя суперсила — связка <strong>Python + AI + QA</strong>: я не просто пишу код, я проверяю его на прочность, валидирую данные и выстраиваю надежные интеграции.
+            </p>
+            <div class="notice-box">
+                <strong>⚠️ Профессиональный стандарт:</strong><br>
+                Я работаю <strong>исключительно в текстовом формате</strong> (мессенджеры, почта, таск-трекеры, код-ревью).
+                Это мой осознанный выбор для обеспечения максимальной четкости документации, трассируемости задач и фокуса на результате.
+            </div>
+        </div>
+    </section>
 
-<script>
-  const cards = document.querySelectorAll('.card');
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target);} });
-  },{threshold:0.15});
-  cards.forEach(c=>{ c.classList.add('pre'); observer.observe(c); });
-</script>
+    <section id="skills" class="section">
+        <h2 class="section-title magnetic">Технический стек</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3 class="magnetic">🎨 Frontend</h3>
+                <p>HTML, CSS, JavaScript: адаптивная верстка, анимации, кастомные курсоры, GitHub Pages. Это портфолио — мой живой пример.</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">💻 Разработка</h3>
+                <p>Python (pandas, try/except), REST API, JSON (парсинг, валидация), SQL (JOIN, GROUP BY, агрегация)</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">🤖 AI Tools</h3>
+                <p>Claude, Cursor (как co-pilot для генерации кода, тестовых сценариев и проверки граничных условий)</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">🔍 QA & Testing</h3>
+                <p>Ручное тестирование, баг-репорты (ID, приоритет, шаги, скриншоты), чек-листы, поиск критических ошибок</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">⚙️ Интеграции</h3>
+                <p>Битрикс24, HH.ru API, нормализация данных, хэширование (md5) для защиты от дублей</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title magnetic">Реализованные проекты</h2>
+        <div class="projects-grid">
+
+            <!-- ЗАМЕНИ href НА ССЫЛКУ СВОЕГО РЕПОЗИТОРИЯ -->
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">🤖 Мульти-модальный AI-бот для сайта и Telegram</h3>
+                <p class="project-tech">Python + DeepSeek API + ChatGPT API + NanoBanana</p>
+                <p>Разработка интеллектуального ассистента. Маршрутизация запросов к разным AI-моделям: текстовые объяснения через DeepSeek/ChatGPT и генерация изображений через NanoBanana. Стабильная обработка ответов и валидация JSON.</p>
+                <span class="card-link">Смотреть на GitHub ↗</span>
+            </a>
+
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">📨 Форма портфолио → Telegram</h3>
+                <p class="project-tech">JavaScript + Google Apps Script + Telegram Bot API</p>
+                <p>Форма обратной связи без собственного сервера: данные уходят в Google Apps Script, который шлёт заявку мне в Telegram. Обработка ошибок, экранирование HTML, логирование.</p>
+                <span class="card-link">Смотреть на GitHub ↗</span>
+            </a>
+
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">🖥 Desktop-приложение для Windows (.exe)</h3>
+                <p class="project-tech">Python → EXE (PyInstaller)</p>
+                <p>Настольное приложение в формате .exe: запускается на любом Windows-ПК без установки Python и зависимостей. Аккуратная упаковка проекта для конечных пользователей.</p>
+                <span class="card-link">Скачать / смотреть на GitHub ↗</span>
+            </a>
+
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">🤖 ИИ-агент для обработки заявок</h3>
+                <p class="project-tech">Python + AI + JSON</p>
+                <p>Автоматизация обработки неструктурированного текста. Настройка системных промптов, пост-обработка (очистка от артефактов), надежная обработка ошибок и интеграция с CRM.</p>
+                <span class="card-link">Смотреть на GitHub ↗</span>
+            </a>
+
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">🔄 Интеграция HH.ru с Битрикс24</h3>
+                <p class="project-tech">REST API + Python + MD5</p>
+                <p>Автоматическое создание лидов из откликов. Нормализация контактов и хэширование (md5) для надежной защиты от дублей в базе.</p>
+                <span class="card-link">Смотреть на GitHub ↗</span>
+            </a>
+
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">🔍 Manual QA: ElsiKora</h3>
+                <p class="project-tech">Web Testing + Bug Reporting</p>
+                <p>Тестирование сайта. Найдено и оформлено 11 багов разных приоритетов (Critical: нерабочая кнопка входа; High: битые ссылки). Создана детальная Google Таблица со скриншотами.</p>
+                <span class="card-link">Смотреть на GitHub ↗</span>
+            </a>
+
+        </div>
+    </section>
+
+    <section id="why" class="section">
+        <h2 class="section-title magnetic">Почему именно я</h2>
+        <div class="why-content">
+            <p class="why-lead">
+                Вы открыли это портфолио не случайно — и я тоже ищу не «любую работу», а команду,
+                где пригодятся внимательность, скорость и любовь к порядку. Вот что вы получите в моем лице:
+            </p>
+            <div class="why-grid">
+                <div class="why-card">
+                    <h3 class="magnetic">🔎 QA-взгляд на всё</h3>
+                    <p>Я замечаю битую кнопку, опечатку в данных и лишний пробел в JSON раньше, чем это сделает пользователь. Ваш продукт будет под присмотром с первой минуты.</p>
+                </div>
+                <div class="why-card">
+                    <h3 class="magnetic">⚡ Скорость через AI — без слепой веры</h3>
+                    <p>Claude и Cursor ускоряют меня в разы: рутина, которая раньше занимала дни, делается за часы. Но каждую строку, каждый тест и каждую цифру я проверяю сама. AI предлагает — за результат отвечаю я.</p>
+                </div>
+                <div class="why-card">
+                    <h3 class="magnetic">📝 Всё задокументировано</h3>
+                    <p>Мой текстовый формат — это плюс для команды: баги, решения и договорённости живут в трекере и переписке, а не растворяются в звонках. Спустя месяц всё можно перечитать и понять без встреч.</p>
+                </div>
+                <div class="why-card">
+                    <h3 class="magnetic">🌱 Учусь на реальном коде</h3>
+                    <p>Это портфолио, бот, интеграции и .exe-приложение написаны руками с нуля. Я не коллекционирую сертификаты — я коллекционирую работающие решения.</p>
+                </div>
+            </div>
+            <div class="why-quote magnetic">
+                Я не прошу «дать мне шанс» — я предлагаю проверить меня делом: тестовое задание, пробная задача, живой код. Результат скажет красноречивее любого резюме.
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title magnetic">Связаться со мной</h2>
+        <div class="contact-content">
+            <p>Открыта к предложениям на удаленную работу.<br>Ожидаемый доход: 65 000 – 95 000 ₽ на руки.</p>
+
+            <form id="contactForm" class="contact-form">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="text" name="email" placeholder="Ваш email или Telegram" required>
+                <textarea name="message" placeholder="Сообщение (вакансия, вопрос, предложение)" rows="4" required></textarea>
+                <button type="submit" class="btn-primary magnetic">Отправить в Telegram</button>
+            </form>
+
+            <div id="formStatus" class="form-status"></div>
+
+            <div class="contact-links">
+                <a href="https://t.me/katenka74" target="_blank" class="contact-btn magnetic">Написать напрямую: @katenka74</a>
+            </div>
+            <p class="footer-note">© 2026 Екатерина. Сделано с вниманием к деталям.</p>
+            <button class="to-top" id="toTop" title="Наверх">↑</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
 </html>
