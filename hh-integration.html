@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интеграция HH.ru и Битрикс24 | Екатерина</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <p class="preloader-text">ЗАГРУЗКА</p>
+            <div class="preloader-bar">
+                <div class="preloader-fill" id="preloaderFill"></div>
+            </div>
+            <p class="preloader-percent" id="preloaderPercent">0%</p>
+        </div>
+    </div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-plasma"></div>
+    <div class="code-bg" aria-hidden="true"></div>
+    <div class="code-rain code-rain-left" aria-hidden="true"></div>
+    <div class="code-rain code-rain-right" aria-hidden="true"></div>
+
+    <nav class="navbar">
+        <div class="logo magnetic">EKATERINA.</div>
+        <ul class="nav-links">
+            <li><a href="index.html#projects">← Назад к проектам</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content" style="flex-direction: column; text-align: center;">
+            <p class="greeting magnetic">Проект</p>
+            <h1 class="name">HR Automation</h1>
+            <h2 class="title magnetic">Интеграция HH.ru с Битрикс24</h2>
+            <p class="description" style="max-width: 800px; margin: 0 auto 2rem;">
+                Автоматизация обработки откликов на вакансии. Скрипт забирает данные с HH.ru,
+                проверяет контакты на дубли с помощью MD5-хэширования и автоматически создаёт лиды в CRM.
+            </p>
+            <div class="hero-badges" style="justify-content: center;">
+                <span class="badge">🐍 Python</span>
+                <span class="badge">🔗 REST API</span>
+                <span class="badge">🔒 MD5 Хэширование</span>
+                <span class="badge">📊 Битрикс24</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🎯 Задача и решение</h2>
+        <div class="about-content">
+            <p>
+                Ручной перенос откликов из HH.ru в CRM отнимает время и приводит к человеческим ошибкам и дублям контактов.
+                Этот проект решает проблему полностью автоматически.
+            </p>
+            <p>
+                <strong>Алгоритм работы:</strong>
+                1. Скрипт по расписанию опрашивает API HH.ru на наличие новых откликов.<br>
+                2. Данные нормализуются, а контактные данные (телефон/email) хэшируются через MD5.<br>
+                3. Происходит проверка: если хэш уже есть в базе, отклик помечается как дубликат и пропускается.<br>
+                4. Если контакт новый, в Битрикс24 через REST API автоматически создаётся новый лид со всеми данными кандидата.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🚀 Дашборд мониторинга</h2>
+        <div class="about-content">
+            <p>
+                Для контроля работы интеграции создан веб-дашборд. Он показывает статистику в реальном времени:
+                количество обработанных откликов, созданных лидов, найденных дубликатов и ошибок, а также подробные логи каждого шага.
+            </p>
+            <div style="text-align: center; margin: 2rem 0;">
+                <a href="dashboard.html" target="_blank" class="btn-primary magnetic" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">
+                    📊 Открыть HR Dashboard ↗
+                </a>
+            </div>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                Откроется в новой вкладке (демо-режим с имитацией данных)
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">💡 Технические детали</h2>
+        <div class="about-content">
+            <p>
+                Проект написан на <strong>Python</strong>. Для взаимодействия с внешними системами используются официальные <strong>REST API</strong> (HH.ru и Битрикс24).
+                Хэширование через <strong>MD5</strong> гарантирует, что даже при разных форматах записи номера телефона (например, +7 и 8) дубликаты будут корректно выявлены.
+                Все ошибки логируются для быстрого анализа и отладки.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🛠 Стек технологий</h2>
+        <div class="hero-badges">
+            <span class="badge">Python</span>
+            <span class="badge">Requests</span>
+            <span class="badge">HH.ru API</span>
+            <span class="badge">Битрикс24 Webhook</span>
+            <span class="badge">MD5 Hashing</span>
+            <span class="badge">HTML/CSS/JS (Dashboard)</span>
+        </div>
+    </section>
+
+    <section class="section" style="text-align: center;">
+        <a href="index.html#projects" class="btn-primary magnetic">← Вернуться к проектам</a>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

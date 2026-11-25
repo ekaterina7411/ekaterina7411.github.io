@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бриллиант Арт | Екатерина</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <p class="preloader-text">ЗАГРУЗКА</p>
+            <div class="preloader-bar">
+                <div class="preloader-fill" id="preloaderFill"></div>
+            </div>
+            <p class="preloader-percent" id="preloaderPercent">0%</p>
+        </div>
+    </div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-plasma"></div>
+    <div class="code-bg" aria-hidden="true"></div>
+    <div class="code-rain code-rain-left" aria-hidden="true"></div>
+    <div class="code-rain code-rain-right" aria-hidden="true"></div>
+
+    <nav class="navbar">
+        <div class="logo magnetic">EKATERINA.</div>
+        <ul class="nav-links">
+            <li><a href="index.html#projects">← Назад к проектам</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content" style="flex-direction: column; text-align: center;">
+            <p class="greeting magnetic">Проект</p>
+            <h1 class="name">Бриллиант Арт</h1>
+            <h2 class="title magnetic">Swarovski Diamond Poster Maker</h2>
+            <p class="description" style="max-width: 800px; margin: 0 auto 2rem;">
+                Рабочее веб-приложение для создания схем алмазной мозаики. Загружаешь фото — получаешь готовую схему выкладки стразами Swarovski с точным расчётом количества каждого цвета.
+            </p>
+            <div class="hero-badges" style="justify-content: center;">
+                <span class="badge">🎨 HTML/CSS/JS</span>
+                <span class="badge">📐 Canvas API</span>
+                <span class="badge">📄 PDF генерация</span>
+                <span class="badge">💼 Продаваемый продукт</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🎯 Как это работает</h2>
+        <div class="about-content">
+            <p>
+                Приложение превращает любое фото в схему для выкладки стразами. Ниже — визуальная история от загрузки фото до готовой картины.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <h3 class="magnetic">1. Главный экран</h3>
+                <p class="project-tech">Загрузка и настройка</p>
+                <p>Пользователь загружает фото, указывает размеры картины в сантиметрах, выбирает размер страз (от ss5 до ss40) и режим (цветной или чёрно-белый).</p>
+                <img src="01-start-screen.jpg" alt="Главный экран приложения" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+            <div class="project-card">
+                <h3 class="magnetic">2. Цветная схема</h3>
+                <p class="project-tech">Цветной режим · 19 026 страз</p>
+                <p>Приложение рассчитывает сетку, подбирает цвета из палитры Swarovski и генерирует таблицу с точным количеством страз каждого цвета + запас 10%.</p>
+                <img src="02-color-scheme.jpg" alt="Цветная схема кота" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+            <div class="project-card">
+                <h3 class="magnetic">3. Чёрно-белая схема</h3>
+                <p class="project-tech">Ч/Б режим · 5 оттенков</p>
+                <p>В монохромном режиме приложение использует 5 оттенков: от Jet (чёрный) до Crystal (белый). Идеально для классических работ.</p>
+                <img src="03-bw-scheme.jpg" alt="Чёрно-белая схема" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+            <div class="project-card">
+                <h3 class="magnetic">4. Оригинальное фото</h3>
+                <p class="project-tech">Исходник</p>
+                <p>Фото рыжего кота с зелёными глазами — то, что загружает пользователь. Приложение сохраняет приватность: фото не уходит на сервер.</p>
+                <img src="04-original-photo.jpg" alt="Оригинальное фото кота" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+            <div class="project-card">
+                <h3 class="magnetic">5. Готовая картина</h3>
+                <p class="project-tech">Результат · 19 026 страз Swarovski</p>
+                <p>Схема из приложения воплощена в жизнь. Точная передача цвета глаз и сложных переходов шерсти.</p>
+                <img src="05-finished-cat.jpg" alt="Готовая картина кота из страз" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+            <div class="project-card">
+                <h3 class="magnetic">6. Схема портрета</h3>
+                <p class="project-tech">Ч/Б режим · детализированная схема</p>
+                <p>Сложный портрет с камуфляжем и деталями формы. Приложение точно рассчитало оттенки для передачи реалистичности.</p>
+                <img src="06-portrait-scheme.jpg" alt="Схема портрета" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+            <div class="project-card">
+                <h3 class="magnetic">7. Готовый портрет</h3>
+                <p class="project-tech">Результат · реализованная схема</p>
+                <p>Портрет, выложенный по схеме из приложения. Точная передача камуфляжа, телесных тонов и деталей формы.</p>
+                <img src="07-finished-portrait.jpg" alt="Готовая картина портрета из страз" style="width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🚀 Демо-версия</h2>
+        <div class="about-content">
+            <p>
+                Полная версия приложения является коммерческим продуктом и успешно продаётся.
+                Ниже доступна ограниченная демо-версия для ознакомления с интерфейсом.
+            </p>
+            <div style="text-align: center; margin: 2rem 0;">
+                <a href="diamond2.html" target="_blank" class="btn-primary magnetic" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">
+                    🎨 Открыть демо-версию ↗
+                </a>
+            </div>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                Работает в браузере, без установки
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">💡 Технические детали</h2>
+        <div class="about-content">
+            <p>
+                Приложение написано на чистом HTML, CSS и JavaScript — без фреймворков. Использует Canvas API для обработки изображений и генерации схем, библиотеку jsPDF для экспорта в PDF. Все вычисления происходят на стороне клиента, что гарантирует приватность и скорость работы.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🛠 Стек технологий</h2>
+        <div class="hero-badges">
+            <span class="badge">HTML5</span>
+            <span class="badge">CSS3</span>
+            <span class="badge">JavaScript</span>
+            <span class="badge">Canvas API</span>
+            <span class="badge">jsPDF</span>
+            <span class="badge">Image Processing</span>
+        </div>
+    </section>
+
+    <section class="section" style="text-align: center;">
+        <a href="index.html#projects" class="btn-primary magnetic">← Вернуться к проектам</a>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

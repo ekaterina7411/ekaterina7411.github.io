@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual QA: ElsiKora | Екатерина</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <p class="preloader-text">ЗАГРУЗКА</p>
+            <div class="preloader-bar">
+                <div class="preloader-fill" id="preloaderFill"></div>
+            </div>
+            <p class="preloader-percent" id="preloaderPercent">0%</p>
+        </div>
+    </div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-plasma"></div>
+    <div class="code-bg" aria-hidden="true"></div>
+    <div class="code-rain code-rain-left" aria-hidden="true"></div>
+    <div class="code-rain code-rain-right" aria-hidden="true"></div>
+
+    <nav class="navbar">
+        <div class="logo magnetic">EKATERINA.</div>
+        <ul class="nav-links">
+            <li><a href="index.html#projects">← Назад к проектам</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content" style="flex-direction: column; text-align: center;">
+            <p class="greeting magnetic">Проект</p>
+            <h1 class="name">Manual QA</h1>
+            <h2 class="title magnetic">ElsiKora · Тестирование сайта</h2>
+            <p class="description" style="max-width: 800px; margin: 0 auto 2rem;">
+                Комплексное ручное тестирование веб-сайта. Найдено и задокументировано
+                <strong>11 багов</strong> разных приоритетов: функциональные, визуальные и UX-ошибки.
+            </p>
+            <div class="hero-badges" style="justify-content: center;">
+                <span class="badge">🔴 Critical</span>
+                <span class="badge">🟠 High</span>
+                <span class="badge">🟡 Medium</span>
+                <span class="badge">🟢 Low</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title magnetic">📋 Задача</h2>
+        <div class="about-content">
+            <p>
+                Провести ручное тестирование сайта и выявить ошибки, мешающие пользователю:
+                неработающие кнопки, битые ссылки, некорректные данные, проблемы читаемости и UX.
+            </p>
+            <p>
+                Каждый баг задокументирован по стандарту QA:
+                <strong>ID, приоритет, краткое описание, шаги воспроизведения, ожидаемый и фактический результат</strong>.
+                К критичным и высоким ошибкам приложены скриншоты.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🐛 Баг-репорт</h2>
+        <div class="about-content">
+            <p>
+                Полная таблица со всеми 11 багами открыта в Google Sheets.
+                Нажми кнопку ниже — она откроется в новой вкладке.
+            </p>
+
+            <div style="text-align: center; margin: 2.5rem 0;">
+                <a href="https://docs.google.com/spreadsheets/d/19o2x7CzC35GmINB-rZsech-TBqZ7gL7nqHwJ4ZvQC2A/edit?usp=sharing"
+                   target="_blank" rel="noopener"
+                   class="btn-primary magnetic"
+                   style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">
+                    📊 Открыть таблицу с багами ↗
+                </a>
+            </div>
+
+            <div class="notice-box">
+                <strong>🔐 Доступ:</strong> таблица открыта в режиме просмотра для всех, у кого есть ссылка.
+                Исправления вносить нельзя — только чтение.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">📊 Что показала проверка</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3 class="magnetic">🔴 Критичные</h3>
+                <p>Блокируют основную функциональность: кнопки, которые не нажимаются, и ошибки 404 там, где пользователь ожидает действие.</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">🟠 Высокие</h3>
+                <p>Ломают пользовательский сценарий: не работают фильтры, показываются устаревшие данные вместо актуальных.</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">🟡 Средние</h3>
+                <p>Портят вид и читаемость: нечитаемый текст, пустые блоки, сырые шорткоды вместо готовых элементов.</p>
+            </div>
+            <div class="skill-card">
+                <h3 class="magnetic">🟢 Низкие</h3>
+                <p>Мелочи интерфейса: не подсвечивается активная вкладка, опечатки. Не критично, но заметно.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">🛠 Инструменты</h2>
+        <div class="hero-badges">
+            <span class="badge">Manual Testing</span>
+            <span class="badge">Bug Reporting</span>
+            <span class="badge">Приоритизация</span>
+            <span class="badge">Скриншоты</span>
+            <span class="badge">Google Sheets</span>
+            <span class="badge">DevTools</span>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title magnetic">✅ Итог</h2>
+        <div class="about-content">
+            <p>
+                Результат — не список ошибок, а <strong>готовый инструмент для разработчика</strong>:
+                по каждому пункту понятно, как воспроизвести, что должно быть вместо этого и насколько это срочно.
+                Так баги не теряются и чинятся по порядку приоритета.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" style="text-align: center;">
+        <a href="index.html#projects" class="btn-primary magnetic">← Вернуться к проектам</a>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

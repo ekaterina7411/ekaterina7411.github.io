@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Swarovski Diamond Poster</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; margin: 0; padding: 20px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { color: #d4af37; text-align: center; }
+  .panel { background: #2a2a2a; padding: 20px; border-radius: 8px; margin: 15px 0; }
+  label { display: block; margin: 10px 0 5px; color: #ccc; }
+  input, select { padding: 10px; background: #333; color: white; border: 1px solid #555; border-radius: 4px; width: 100%; box-sizing: border-box; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .col { flex: 1; min-width: 120px; }
+  button { padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 15px; margin: 5px; }
+  .btn-gen { background: #d4af37; color: #000; width: 100%; font-size: 18px; }
+  .btn-save { background: #2e7d32; color: white; }
+  .btn-print { background: #1565c0; color: white; }
+  .btn-pdf { background: #c62828; color: white; }
+  button:hover { opacity: 0.9; }
+  #status { margin: 15px 0; padding: 10px; background: #333; border-radius: 5px; text-align: center; color: #d4af37; font-weight: bold; }
+  #canvasWrap { text-align: center; margin: 20px 0; overflow: auto; max-height: 500px; border: 2px solid #444; padding: 10px; background: #000; }
+  canvas { max-width: 100%; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { background: #444; color: #d4af37; padding: 8px; text-align: left; }
+  td { padding: 8px; border-bottom: 1px solid #444; }
+  .swatch { width: 24px; height: 24px; border-radius: 50%; display: inline-block; vertical-align: middle; border: 2px solid #000; margin-right: 8px; }
+  
+  .info-box { background: #1a3a1a; border-left: 4px solid #4caf50; padding: 10px 15px; margin-top: 10px; border-radius: 4px; color: #4caf50; font-size: 14px; }
+  .info-box.warn { background: #3a2a1a; border-left-color: #ff9800; color: #ff9800; }
+  .info-box.bad { background: #3a1a1a; border-left-color: #f44336; color: #f44336; }
+  
+  #printArea, #pdfFrame { display: none; }
+  
+  .print-page {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    box-sizing: border-box;
+    background: #fff;
+    overflow: hidden;
+  }
+  .print-page canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+  .page-label {
+    display: block;
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #fff !important;
+      visibility: visible !important;
+    }
+
+    body * {
+      visibility: hidden;
+    }
+
+    #printArea,
+    #printArea * {
+      visibility: visible !important;
+    }
+
+    #printArea {
+      display: block !important;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .print-page {
+      page-break-after: always;
+      page-break-inside: avoid;
+      break-after: page;
+      break-inside: avoid;
+      width: 210mm;
+      height: 297mm;
+      margin: 0;
+      padding: 0;
+      display: block !important;
+      background: #fff !important;
+    }
+
+    .print-page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+
+    .page-label {
+      display: block !important;
+      visibility: visible !important;
+      position: absolute;
+      bottom: 3mm;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 10px;
+      color: #666;
+    }
+
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    canvas {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .container,
+    header, footer, nav,
+    button,
+    .panel,
+    #status,
+    #pdfFrame {
+      display: none !important;
+      visibility: hidden !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>💎 Swarovski Diamond Poster Maker</h1>
+  
+  <div class="panel">
+    <div class="row">
+      <div class="col">
+        <label>📷 Фото:</label>
+        <input type="file" id="imgInput" accept="image/*">
+      </div>
+      <div class="col">
+        <label>📐 Ширина (см):</label>
+        <input type="number" id="w" value="40" min="5" max="200" oninput="updateInfo()">
+      </div>
+      <div class="col">
+        <label>📐 Высота (см):</label>
+        <input type="number" id="h" value="50" min="5" max="200" oninput="updateInfo()">
+      </div>
+      <div class="col">
+        <label>💎 Размер страз:</label>
+        <select id="size" onchange="updateInfo()">
+          <option value="auto"> АВТОПОДБОР (рекомендуем)</option>
+          <option value="1.8">ss5 (1.8 мм) — очень мелкие</option>
+          <option value="2.0">ss6 (2.0 мм) — мелкие</option>
+          <option value="2.3">ss8 (2.3 мм) — мелкие</option>
+          <option value="2.7">ss10 (2.7 мм)</option>
+          <option value="2.9">2078 (2.9 мм) Xilion Rose</option>
+          <option value="3.1">ss12 (3.1 мм)</option>
+          <option value="3.8" selected>ss16 (3.8 мм) — стандарт</option>
+          <option value="3.9">2088 (3.9 мм) Xilion Rose</option>
+          <option value="4.6">ss20 (4.6 мм) — крупные</option>
+          <option value="6.3">ss30 (6.3 мм) — очень крупные</option>
+          <option value="7.0">ss34 (7.0 мм) — гигантские</option>
+          <option value="8.5">ss40 (8.5 мм) — макси</option>
+        </select>
+      </div>
+      <div class="col">
+        <label>🎨 Режим:</label>
+        <select id="mode">
+          <option value="bw">Чёрно-белый</option>
+          <option value="color">Цветной</option>
+        </select>
+      </div>
+    </div>
+    
+    <div id="sizeInfo" class="info-box">Введите размеры картины</div>
+    
+    <button class="btn-gen" onclick="generate()" style="margin-top:15px;">✨ Создать эскиз</button>
+  </div>
+
+  <div id="resultPanel" class="panel" style="display:none;">
+    <div style="text-align:center; margin-bottom:15px;">
+      <button class="btn-save" onclick="saveImage()">💾 Скачать схему (PNG)</button>
+      <button class="btn-pdf" onclick="savePDF()">📄 Сохранить спецификацию (PDF)</button>
+      <button class="btn-print" onclick="preparePoster()">🖨️ Распечатать как постер (А4)</button>
+    </div>
+    
+    <h3 style="color:#d4af37;">📊 Количество страз по цветам:</h3>
+    <div style="max-height:300px; overflow-y:auto; background:#1a1a1a; padding:10px; border-radius:5px;">
+      <table>
+        <thead>
+          <tr><th>Цвет</th><th>Код</th><th>Количество</th><th>С запасом +10%</th><th>%</th></tr>
+        </thead>
+        <tbody id="legendBody"></tbody>
+      </table>
+    </div>
+
+    <h3 style="color:#d4af37; margin-top:20px;">👁️ Предпросмотр схемы:</h3>
+    <div id="canvasWrap"><canvas id="mainCanvas"></canvas></div>
+  </div>
+</div>
+
+<div id="printArea"></div>
+<iframe id="pdfFrame"></iframe>
+<div id="status">Загрузите фото и нажмите "Создать эскиз"</div>
+
+<script>
+let img = null;
+let schemeData = null;
+
+const ALL_SIZES = [
+  { code: "ss5",  mm: 1.8, name: "ss5 (1.8 мм)" },
+  { code: "ss6",  mm: 2.0, name: "ss6 (2.0 мм)" },
+  { code: "ss8",  mm: 2.3, name: "ss8 (2.3 мм)" },
+  { code: "ss10", mm: 2.7, name: "ss10 (2.7 мм)" },
+  { code: "2078", mm: 2.9, name: "2078 (2.9 мм)" },
+  { code: "ss12", mm: 3.1, name: "ss12 (3.1 мм)" },
+  { code: "ss16", mm: 3.8, name: "ss16 (3.8 мм)" },
+  { code: "2088", mm: 3.9, name: "2088 (3.9 мм)" },
+  { code: "ss20", mm: 4.6, name: "ss20 (4.6 мм)" },
+  { code: "ss30", mm: 6.3, name: "ss30 (6.3 мм)" },
+  { code: "ss34", mm: 7.0, name: "ss34 (7.0 мм)" },
+  { code: "ss40", mm: 8.5, name: "ss40 (8.5 мм)" }
+];
+
+const PALETTE_BW = [
+  ["280", "Jet (Чёрный)", 10, 10, 10],
+  ["281", "Black Diamond", 40, 40, 45],
+  ["276", "Graphite", 80, 80, 85],
+  ["249", "Dark Grey", 110, 110, 115],
+  ["278", "Silver Shade", 160, 160, 165],
+  ["242", "Light Grey", 195, 195, 200],
+  ["001", "Crystal (Белый)", 240, 240, 245]
+];
+
+const PALETTE_COLOR = [
+  ["280", "Jet", 10, 10, 10],
+  ["001", "Crystal", 240, 240, 245],
+  ["206", "Sapphire", 0, 51, 102],
+  ["211", "Light Sapphire", 135, 206, 235],
+  ["207", "Montana", 70, 130, 180],
+  ["217", "Indigo", 25, 25, 112],
+  ["213", "Capri Blue", 0, 127, 187],
+  ["208", "Siam", 139, 0, 0],
+  ["227", "Light Siam", 220, 20, 60],
+  ["204", "Amethyst", 138, 43, 226],
+  ["212", "Light Amethyst", 216, 191, 216],
+  ["371", "Violet", 148, 0, 211],
+  ["205", "Emerald", 0, 100, 0],
+  ["214", "Peridot", 124, 252, 0],
+  ["215", "Erinite", 0, 128, 0],
+  ["228", "Olivine", 107, 142, 35],
+  ["216", "Colorado Topaz", 255, 140, 0],
+  ["246", "Light Colorado Topaz", 255, 215, 0],
+  ["226", "Light Topaz", 255, 200, 100],
+  ["237", "Colorado Topaz", 218, 165, 32],
+  ["209", "Rose", 255, 182, 193],
+  ["262", "Rose Peach", 255, 218, 185],
+  ["289", "Indian Pink", 255, 105, 180],
+  ["502", "Fuchsia", 255, 0, 255],
+  ["263", "Aquamarine", 102, 205, 170],
+  ["202", "Light Turquoise", 64, 224, 208],
+  ["360", "Turquoise", 0, 206, 209],
+  ["223", "Mocha", 139, 69, 19],
+  ["234", "Dark Brown", 101, 67, 33]
+];
+
+document.getElementById('imgInput').onchange = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    img = new Image();
+    img.onload = () => {
+      document.getElementById('status').innerText = '✅ Фото загружено! Нажмите "Создать эскиз"';
+      updateInfo();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+function updateInfo() {
+  const wCm = parseFloat(document.getElementById('w').value) || 0;
+  const hCm = parseFloat(document.getElementById('h').value) || 0;
+  const sel = document.getElementById('size');
+  const infoBox = document.getElementById('sizeInfo');
+  
+  if (wCm === 0 || hCm === 0) {
+    infoBox.className = 'info-box';
+    infoBox.innerText = 'Введите размеры картины';
+    return;
+  }
+  
+  const area = wCm * hCm;
+  
+  if (sel.value === 'auto') {
+    let targetTotal;
+    if (area < 100) targetTotal = 3000;
+    else if (area < 400) targetTotal = 5000;
+    else if (area < 1000) targetTotal = 8000;
+    else if (area < 3000) targetTotal = 12000;
+    else targetTotal = 15000;
+    
+    let bestSize = ALL_SIZES[0];
+    let bestDiff = Infinity;
+    
+    for (let sz of ALL_SIZES) {
+      const pitch = sz.mm * 1.1;
+      const cols = (wCm * 10) / pitch;
+      const rows = (hCm * 10) / pitch;
+      const total = cols * rows;
+      const diff = Math.abs(total - targetTotal);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        bestSize = sz;
+      }
+    }
+    
+    const pitch = bestSize.mm * 1.1;
+    const cols = Math.floor((wCm * 10) / pitch);
+    const rows = Math.floor((hCm * 10) / pitch);
+    const total = cols * rows;
+    
+    infoBox.className = 'info-box';
+    infoBox.innerHTML = `🤖 <b>Рекомендуем: ${bestSize.name}</b><br>Получится сетка ${cols}×${rows} = <b>${total.toLocaleString()} страз</b>.`;
+  } else {
+    const mm = parseFloat(sel.value);
+    const pitch = mm * 1.1;
+    const cols = Math.floor((wCm * 10) / pitch);
+    const rows = Math.floor((hCm * 10) / pitch);
+    const total = cols * rows;
+    
+    if (total < 500) {
+      infoBox.className = 'info-box bad';
+      infoBox.innerHTML = `⚠️ Слишком крупные стразы! Получится всего <b>${total} шт.</b>`;
+    } else if (total > 30000) {
+      infoBox.className = 'info-box warn';
+      infoBox.innerHTML = `⚠️ Очень много страз: <b>${total.toLocaleString()} шт.</b>`;
+    } else {
+      infoBox.className = 'info-box';
+      infoBox.innerHTML = `📐 Сетка: <b>${cols}×${rows} = ${total.toLocaleString()} страз</b>.`;
+    }
+  }
+}
+
+// 🎨 Универсальная функция рисования одной стразы с градиентом и бликом
+function drawRhinestone(ctx, cx, cy, rad, r, g, b, showCode, code) {
+  // Для очень мелких страз (при печати) — только плоский цвет
+  if (rad < 4) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+    ctx.fillStyle = `rgb(${r},${g},${b})`;
+    ctx.fill();
+    return;
+  }
+  
+  // Радиальный градиент: светлый центр → основной цвет → тёмный край
+  const grad = ctx.createRadialGradient(
+    cx - rad * 0.35, cy - rad * 0.35, 0,
+    cx, cy, rad
+  );
+  
+  const lightR = Math.min(255, r + 100);
+  const lightG = Math.min(255, g + 100);
+  const lightB = Math.min(255, b + 100);
+  const darkR = Math.max(0, r - 60);
+  const darkG = Math.max(0, g - 60);
+  const darkB = Math.max(0, b - 60);
+  
+  grad.addColorStop(0, `rgb(${lightR},${lightG},${lightB})`);
+  grad.addColorStop(0.5, `rgb(${r},${g},${b})`);
+  grad.addColorStop(1, `rgb(${darkR},${darkG},${darkB})`);
+  
+  ctx.beginPath();
+  ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+  ctx.fillStyle = grad;
+  ctx.fill();
+  
+  // Блик — маленький белый кружок сверху
+  if (rad > 6) {
+    ctx.beginPath();
+    ctx.arc(cx - rad * 0.35, cy - rad * 0.35, rad * 0.18, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+    ctx.fill();
+  }
+  
+  // Тонкая обводка
+  ctx.beginPath();
+  ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(0,0,0,0.25)`;
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+  
+  // 🔥 Код стразы ТОЛЬКО если разрешено и достаточно места
+  if (showCode && rad > 8) {
+    const brightness = r * 0.299 + g * 0.587 + b * 0.114;
+    ctx.fillStyle = brightness > 128 ? '#000' : '#fff';
+    ctx.font = `bold ${Math.max(7, rad * 0.45)}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(code, cx, cy);
+  }
+}
+
+function generate() {
+  if (!img) return alert('Сначала загрузите фото!');
+  
+  const wCm = +document.getElementById('w').value;
+  const hCm = +document.getElementById('h').value;
+  const sel = document.getElementById('size');
+  let mm;
+  
+  if (sel.value === 'auto') {
+    const area = wCm * hCm;
+    let targetTotal = area < 100 ? 3000 : area < 400 ? 5000 : area < 1000 ? 8000 : area < 3000 ? 12000 : 15000;
+    let bestSize = ALL_SIZES[0], bestDiff = Infinity;
+    for (let sz of ALL_SIZES) {
+      const pitch = sz.mm * 1.1;
+      const total = ((wCm * 10) / pitch) * ((hCm * 10) / pitch);
+      const diff = Math.abs(total - targetTotal);
+      if (diff < bestDiff) { bestDiff = diff; bestSize = sz; }
+    }
+    mm = bestSize.mm;
+  } else {
+    mm = parseFloat(sel.value);
+  }
+  
+  const mode = document.getElementById('mode').value;
+  const pitch = mm * 1.1;
+  
+  document.getElementById('status').innerText = `⏳ Генерация (стразы ${mm} мм)...`;
+  
+  setTimeout(() => {
+    try {
+      const cols = Math.floor(wCm * 10 / pitch);
+      const rows = Math.floor(hCm * 10 / pitch);
+      
+      const tmp = document.createElement('canvas');
+      tmp.width = cols; tmp.height = rows;
+      const tc = tmp.getContext('2d');
+      tc.drawImage(img, 0, 0, cols, rows);
+      const data = tc.getImageData(0, 0, cols, rows).data;
+      
+      const palette = mode === 'bw' ? PALETTE_BW : PALETTE_COLOR;
+      const counts = {};
+      palette.forEach(p => counts[p[0]] = { code: p[0], name: p[1], r: p[2], g: p[3], b: p[4], count: 0 });
+      
+      const canvas = document.getElementById('mainCanvas');
+      const px = 5;
+      canvas.width = cols * pitch * px;
+      canvas.height = rows * pitch * px;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      const grid = [];
+      
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const i = (y * cols + x) * 4;
+          let r = data[i], g = data[i+1], b = data[i+2];
+          
+          if (mode === 'bw') {
+            const gray = Math.round(0.3*r + 0.59*g + 0.11*b);
+            r = g = b = gray;
+          }
+          
+          let best = palette[0], min = 999999;
+          for (let p of palette) {
+            const d = Math.sqrt(
+              Math.pow((r - p[2]) * 0.3, 2) +
+              Math.pow((g - p[3]) * 0.59, 2) +
+              Math.pow((b - p[4]) * 0.11, 2)
+            );
+            if (d < min) { min = d; best = p; }
+          }
+          
+          counts[best[0]].count++;
+          grid.push({x, y, code: best[0]});
+          
+          const cx = x * pitch * px + (pitch * px) / 2;
+          const cy = y * pitch * px + (pitch * px) / 2;
+          const rad = (pitch * px) / 2 - 1;
+          
+          // На экране показываем код на средних и крупных стразах
+          drawRhinestone(ctx, cx, cy, rad, best[2], best[3], best[4], rad > 7, best[0]);
+        }
+      }
+      
+      schemeData = { cols, rows, pitch, grid, palette, counts, stoneMm: mm };
+      renderLegend(counts, cols * rows);
+      document.getElementById('resultPanel').style.display = 'block';
+      document.getElementById('status').innerText = `✅ Готово! ${cols}×${rows} = ${(cols*rows).toLocaleString()} страз`;
+    } catch (err) {
+      alert('Ошибка: ' + err.message);
+    }
+  }, 100);
+}
+
+function renderLegend(counts, total) {
+  const tbody = document.getElementById('legendBody');
+  tbody.innerHTML = '';
+  const sorted = Object.values(counts).filter(c => c.count > 0).sort((a,b) => b.count - a.count);
+  
+  sorted.forEach(c => {
+    const pct = ((c.count / total) * 100).toFixed(1);
+    const withReserve = Math.ceil(c.count * 1.1);
+    tbody.innerHTML += `<tr>
+      <td><span class="swatch" style="background:rgb(${c.r},${c.g},${c.b})"></span>${c.name}</td>
+      <td><strong>${c.code}</strong></td>
+      <td><strong>${c.count.toLocaleString()}</strong></td>
+      <td style="color:#4caf50;"><strong>${withReserve.toLocaleString()}</strong></td>
+      <td>${pct}%</td>
+    </tr>`;
+  });
+  
+  const totalWithReserve = Math.ceil(total * 1.1);
+  tbody.innerHTML += `<tr style="background:#444; font-weight:bold;">
+    <td colspan="2">ИТОГО:</td>
+    <td>${total.toLocaleString()}</td>
+    <td style="color:#4caf50;">${totalWithReserve.toLocaleString()}</td>
+    <td>100%</td>
+  </tr>`;
+}
+
+function saveImage() {
+  if (!schemeData) return;
+  const canvas = document.getElementById('mainCanvas');
+  const link = document.createElement('a');
+  link.download = 'swarovski-sketch.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function savePDF() {
+  if (!schemeData) return alert('Сначала создайте эскиз!');
+  
+  const { counts, cols, rows, stoneMm } = schemeData;
+  const total = cols * rows;
+  const sorted = Object.values(counts).filter(c => c.count > 0).sort((a,b) => b.count - a.count);
+  
+  const wCm = document.getElementById('w').value;
+  const hCm = document.getElementById('h').value;
+  const sizeText = document.getElementById('size').selectedOptions[0].text;
+  const modeText = document.getElementById('mode').selectedOptions[0].text;
+  
+  let tableRows = '';
+  sorted.forEach((c, idx) => {
+    const pct = ((c.count / total) * 100).toFixed(1);
+    const withReserve = Math.ceil(c.count * 1.1);
+    tableRows += `
+      <tr>
+        <td>${idx + 1}</td>
+        <td><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:rgb(${c.r},${c.g},${c.b});border:2px solid #000;vertical-align:middle;"></span> ${c.name}</td>
+        <td><strong>${c.code}</strong></td>
+        <td><strong>${c.count.toLocaleString()}</strong></td>
+        <td style="color:#2e7d32;"><strong>${withReserve.toLocaleString()}</strong></td>
+        <td>${pct}%</td>
+      </tr>
+    `;
+  });
+  
+  const totalWithReserve = Math.ceil(total * 1.1);
+  
+  const html = `
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Спецификация Swarovski</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
+  h1 { color: #d4af37; border-bottom: 3px solid #d4af37; padding-bottom: 10px; }
+  .info { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0; }
+  .info-row { margin: 8px 0; font-size: 16px; }
+  .info-label { font-weight: bold; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th { background: #d4af37; color: white; padding: 12px; text-align: left; }
+  td { padding: 10px; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) { background: #f9f9f9; }
+  .total-row { background: #d4af37 !important; color: white; font-weight: bold; font-size: 18px; }
+  .footer { margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; text-align: center; color: #999; font-size: 12px; }
+  @media print {
+    body { padding: 10px; }
+    .no-print { display: none; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+  <h1>💎 СПЕЦИФИКАЦИЯ МАТЕРИАЛОВ</h1>
+  <div style="color:#666;font-size:14px;">Портрет из кристаллов Swarovski</div>
+  
+  <div class="info">
+    <div class="info-row"><span class="info-label">Размер картины:</span> ${wCm} × ${hCm} см</div>
+    <div class="info-row"><span class="info-label">Размер страз:</span> ${sizeText}</div>
+    <div class="info-row"><span class="info-label">Режим:</span> ${modeText}</div>
+    <div class="info-row"><span class="info-label">Сетка:</span> ${cols} × ${rows} = ${total.toLocaleString()} страз</div>
+    <div class="info-row"><span class="info-label">Дата создания:</span> ${new Date().toLocaleString('ru-RU')}</div>
+  </div>
+  
+  <h2>📦 Список материалов для закупки</h2>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Цвет</th>
+        <th>Код Swarovski</th>
+        <th>Количество</th>
+        <th>С запасом +10%</th>
+        <th>Доля</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${tableRows}
+      <tr class="total-row">
+        <td colspan="3">ИТОГО:</td>
+        <td>${total.toLocaleString()} шт.</td>
+        <td>${totalWithReserve.toLocaleString()} шт.</td>
+        <td>100%</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div style="margin-top:30px;padding:15px;background:#fff3cd;border:1px solid #ffc107;border-radius:5px;">
+    <h3 style="margin-top:0;color:#856404;">⚠️ Важные рекомендации:</h3>
+    <ul style="color:#856404;line-height:1.6;">
+      <li>Заказывайте стразы с запасом <strong>+10-15%</strong> на потери и брак</li>
+      <li>Проверяйте артикулы перед заказом на официальном сайте Swarovski</li>
+      <li>Для клея используйте E6000, Gem-Tac или специальный клей для страз</li>
+      <li>Рекомендуемая основа: чёрная бархатная бумага или холст</li>
+    </ul>
+  </div>
+  
+  <div class="footer">
+    Документ создан: ${new Date().toLocaleString('ru-RU')} | Swarovski Diamond Poster Maker
+  </div>
+  
+  <div class="no-print" style="text-align:center;margin-top:30px;">
+    <button onclick="window.print()" style="background:#d4af37;color:white;border:none;padding:15px 40px;font-size:16px;border-radius:5px;cursor:pointer;font-weight:bold;">
+      🖨️ Сохранить как PDF / Распечатать
+    </button>
+    <p style="color:#666;margin-top:10px;">В диалоге печати выберите "Сохранить как PDF"</p>
+  </div>
+</body>
+</html>`;
+  
+  const iframe = document.getElementById('pdfFrame');
+  iframe.srcdoc = html;
+  
+  setTimeout(() => {
+    document.getElementById('status').innerText = '✅ Спецификация готова! Нажмите Ctrl+P внутри окна спецификации для PDF';
+    alert('Спецификация загружена. Нажмите Ctrl+P (или Cmd+P на Mac) и выберите "Сохранить как PDF" в диалоге печати.');
+  }, 500);
+}
+
+function preparePoster() {
+  if (!schemeData) return alert('Сначала создайте эскиз!');
+  document.getElementById('status').innerText = '⏳ Подготовка листов для печати...';
+  
+  setTimeout(() => {
+    try {
+      const { cols, rows, pitch, grid, palette, stoneMm } = schemeData;
+      const colorMap = {};
+      palette.forEach(p => colorMap[p[0]] = p);
+      
+      const a4Wmm = 210, a4Hmm = 297;
+      const marginMm = 10;
+      const usableWmm = a4Wmm - marginMm * 2;
+      const usableHmm = a4Hmm - marginMm * 2;
+      
+      const colsPerPage = Math.floor(usableWmm / pitch);
+      const rowsPerPage = Math.floor(usableHmm / pitch);
+      const totalPagesX = Math.ceil(cols / colsPerPage);
+      const totalPagesY = Math.ceil(rows / rowsPerPage);
+      
+      const printArea = document.getElementById('printArea');
+      printArea.innerHTML = '';
+      
+      const dpi = 96;
+      const mmToPx = dpi / 25.4;
+      const pageWpx = Math.round(a4Wmm * mmToPx);
+      const pageHpx = Math.round(a4Hmm * mmToPx);
+      
+      const scale = 2;
+      
+      // 🔑 Решаем, показывать ли коды на постере:
+      // Для страз 6.3 мм и крупнее — показываем код
+      // Для страз мельче 6.3 мм — коды НЕ показываем (они не читаются при печати)
+      const showCodesOnPoster = stoneMm >= 6.3;
+      
+      for (let pageY = 0; pageY < totalPagesY; pageY++) {
+        for (let pageX = 0; pageX < totalPagesX; pageX++) {
+          const pageDiv = document.createElement('div');
+          pageDiv.className = 'print-page';
+          
+          const c = document.createElement('canvas');
+          c.width = pageWpx * scale;
+          c.height = pageHpx * scale;
+          const ctx = c.getContext('2d');
+          ctx.scale(scale, scale);
+          
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, pageWpx, pageHpx);
+          
+          const startX = pageX * colsPerPage;
+          const startY = pageY * rowsPerPage;
+          const endX = Math.min(cols, startX + colsPerPage);
+          const endY = Math.min(rows, startY + rowsPerPage);
+          
+          const offsetX = marginMm * mmToPx;
+          const offsetY = marginMm * mmToPx;
+          
+          for (let y = startY; y < endY; y++) {
+            for (let x = startX; x < endX; x++) {
+              const cell = grid[y * cols + x];
+              const p = colorMap[cell.code];
+              const cx = offsetX + (x - startX) * pitch * mmToPx + (pitch * mmToPx) / 2;
+              const cy = offsetY + (y - startY) * pitch * mmToPx + (pitch * mmToPx) / 2;
+              const rad = (pitch * mmToPx) / 2 - 0.5;
+              
+              // 🎨 Рисуем яркую стразу с объёмом. Код показываем только если разрешено И страза крупная
+              drawRhinestone(ctx, cx, cy, rad, p[2], p[3], p[4], showCodesOnPoster, p[0]);
+            }
+          }
+          
+          ctx.strokeStyle = '#cccccc';
+          ctx.lineWidth = 0.5;
+          ctx.strokeRect(offsetX, offsetY, (endX - startX) * pitch * mmToPx, (endY - startY) * pitch * mmToPx);
+          
+          const label = document.createElement('div');
+          label.className = 'page-label';
+          label.innerText = `Лист ${pageX+1}×${pageY+1} из ${totalPagesX}×${totalPagesY}`;
+          
+          pageDiv.appendChild(c);
+          pageDiv.appendChild(label);
+          printArea.appendChild(pageDiv);
+        }
+      }
+      
+      document.getElementById('status').innerText = '✅ Открывается окно печати...';
+      
+      setTimeout(() => {
+        window.print();
+      }, 700);
+      
+      const cleanup = () => {
+        setTimeout(() => {
+          printArea.innerHTML = '';
+          document.getElementById('status').innerText = '✅ Печать завершена!';
+        }, 300);
+      };
+      
+      if ('onafterprint' in window) {
+        window.addEventListener('afterprint', cleanup, { once: true });
+      } else {
+        setTimeout(cleanup, 5000);
+      }
+      
+    } catch (err) {
+      alert('Ошибка печати: ' + err.message);
+    }
+  }, 100);
+}
+
+updateInfo();
+</script>
+</body>
+</html>

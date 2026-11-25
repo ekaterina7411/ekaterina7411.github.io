@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Экран загрузки -->
+
     <div class="preloader" id="preloader">
         <div class="preloader-content">
-            <p class="preloader-text">Загрузка</p>
+            <p class="preloader-text">ЗАГРУЗКА</p>
             <div class="preloader-bar">
                 <div class="preloader-fill" id="preloaderFill"></div>
             </div>
@@ -21,17 +21,11 @@
         </div>
     </div>
 
-    <!-- Полоса прогресса прокрутки -->
     <div class="scroll-progress" id="scrollProgress"></div>
-
-    <!-- Кастомный курсор -->
     <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+    <div class="cursor-plasma"></div>
 
-    <!-- Еле заметный код на ВСЮ страницу, течёт снизу вверх -->
     <div class="code-bg" aria-hidden="true"></div>
-
-    <!-- Живой код по краям экрана -->
     <div class="code-rain code-rain-left" aria-hidden="true"></div>
     <div class="code-rain code-rain-right" aria-hidden="true"></div>
 
@@ -118,18 +112,31 @@
         <h2 class="section-title magnetic">Реализованные проекты</h2>
         <div class="projects-grid">
 
-            <!-- ЗАМЕНИ href НА ССЫЛКУ СВОЕГО РЕПОЗИТОРИЯ -->
+            <a class="project-card" href="diamond-art.html" target="_blank" rel="noopener">
+                <h3 class="magnetic">💎 Бриллиант Арт (Swarovski Diamond Poster Maker)</h3>
+                <p class="project-tech">HTML/CSS/JS + Canvas API + PDF генерация</p>
+                <p>Рабочее веб-приложение для создания схем алмазной мозаики. Превращает фото в схему выкладки стразами Swarovski с точным расчётом материалов. Есть редактор, экспорт в PDF и печать постеров.</p>
+                <span class="card-link">Открыть витрину проекта ↗</span>
+            </a>
+
+            <a class="project-card" href="qa-elsikora.html" target="_blank" rel="noopener">
+                <h3 class="magnetic">🔍 Manual QA: ElsiKora</h3>
+                <p class="project-tech">Web Testing + Bug Reporting</p>
+                <p>Тестирование сайта. Найдено и оформлено 11 багов разных приоритетов (Critical: нерабочая кнопка входа; High: битые ссылки). Полная таблица со скриншотами — по клику.</p>
+                <span class="card-link">Открыть баг-репорт ↗</span>
+            </a>
+
+            <a class="project-card" href="hh-integration.html" target="_blank" rel="noopener">
+                <h3 class="magnetic">🔄 Интеграция HH.ru с Битрикс24</h3>
+                <p class="project-tech">Python + REST API + MD5</p>
+                <p>Автоматическое создание лидов из откликов. Нормализация контактов и хэширование (md5) для надежной защиты от дублей в базе. Есть дашборд мониторинга.</p>
+                <span class="card-link">Открыть витрину проекта ↗</span>
+            </a>
+
             <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
                 <h3 class="magnetic">🤖 Мульти-модальный AI-бот для сайта и Telegram</h3>
                 <p class="project-tech">Python + DeepSeek API + ChatGPT API + NanoBanana</p>
                 <p>Разработка интеллектуального ассистента. Маршрутизация запросов к разным AI-моделям: текстовые объяснения через DeepSeek/ChatGPT и генерация изображений через NanoBanana. Стабильная обработка ответов и валидация JSON.</p>
-                <span class="card-link">Смотреть на GitHub ↗</span>
-            </a>
-
-            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
-                <h3 class="magnetic">📨 Форма портфолио → Telegram</h3>
-                <p class="project-tech">JavaScript + Google Apps Script + Telegram Bot API</p>
-                <p>Форма обратной связи без собственного сервера: данные уходят в Google Apps Script, который шлёт заявку мне в Telegram. Обработка ошибок, экранирование HTML, логирование.</p>
                 <span class="card-link">Смотреть на GitHub ↗</span>
             </a>
 
@@ -141,23 +148,16 @@
             </a>
 
             <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
+                <h3 class="magnetic">📨 Форма портфолио → Telegram</h3>
+                <p class="project-tech">JavaScript + Google Apps Script + Telegram Bot API</p>
+                <p>Форма обратной связи без собственного сервера: данные уходят в Google Apps Script, который шлёт заявку мне в Telegram. Обработка ошибок, экранирование HTML, логирование.</p>
+                <span class="card-link">Смотреть на GitHub ↗</span>
+            </a>
+
+            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
                 <h3 class="magnetic">🤖 ИИ-агент для обработки заявок</h3>
                 <p class="project-tech">Python + AI + JSON</p>
                 <p>Автоматизация обработки неструктурированного текста. Настройка системных промптов, пост-обработка (очистка от артефактов), надежная обработка ошибок и интеграция с CRM.</p>
-                <span class="card-link">Смотреть на GitHub ↗</span>
-            </a>
-
-            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
-                <h3 class="magnetic">🔄 Интеграция HH.ru с Битрикс24</h3>
-                <p class="project-tech">REST API + Python + MD5</p>
-                <p>Автоматическое создание лидов из откликов. Нормализация контактов и хэширование (md5) для надежной защиты от дублей в базе.</p>
-                <span class="card-link">Смотреть на GitHub ↗</span>
-            </a>
-
-            <a class="project-card" href="https://github.com/ekaterina7411" target="_blank" rel="noopener">
-                <h3 class="magnetic">🔍 Manual QA: ElsiKora</h3>
-                <p class="project-tech">Web Testing + Bug Reporting</p>
-                <p>Тестирование сайта. Найдено и оформлено 11 багов разных приоритетов (Critical: нерабочая кнопка входа; High: битые ссылки). Создана детальная Google Таблица со скриншотами.</p>
                 <span class="card-link">Смотреть на GitHub ↗</span>
             </a>
 

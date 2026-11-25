@@ -37,7 +37,7 @@ function flyWord(span) {
 }
 
 /* =========================================
-   1. ЭКРАН ЗАГРУЗКИ: полоса заполняется → страница открывается
+   1. ЭКРАН ЗАГРУЗКИ
    ========================================= */
 (function initPreloader() {
     const pre = document.getElementById('preloader');
@@ -45,7 +45,6 @@ function flyWord(span) {
     const percentEl = document.getElementById('preloaderPercent');
     const nameEl = document.querySelector('.name');
 
-    // если прелоадера нет (старая разметка) — просто запускаем имя
     if (!pre || !fill) {
         if (nameEl) scrambleEl(nameEl);
         return;
@@ -65,7 +64,6 @@ function flyWord(span) {
             setTimeout(() => {
                 pre.classList.add('hidden');
                 document.body.classList.remove('loading');
-                // имя расшифровывается ровно в момент открытия страницы
                 if (nameEl) scrambleEl(nameEl);
                 setTimeout(() => pre.remove(), 700);
             }, 300);
@@ -77,35 +75,76 @@ function flyWord(span) {
 })();
 
 /* =========================================
-   2. КУРСОР + ПРОЖЕКТОР
+   2. КАСТОМНЫЙ КУРСОР: ТОЧКА + ПЛАЗМА
    ========================================= */
 const cursorDot = document.querySelector('.cursor-dot');
-const cursorRing = document.querySelector('.cursor-ring');
+const cursorPlasma = document.querySelector('.cursor-plasma');
 
-if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
+if (cursorDot && cursorPlasma && window.matchMedia('(pointer: fine)').matches) {
     let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+    let lastPlasmaTime = 0;
+
+    const plasmaColors = [
+        'rgba(0, 212, 255, 0.8)',
+        'rgba(168, 85, 247, 0.8)',
+        'rgba(236, 72, 153, 0.8)',
+        'rgba(255, 255, 255, 0.9)'
+    ];
 
     window.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         cursorDot.style.left = mouseX + 'px';
         cursorDot.style.top = mouseY + 'px';
+        cursorPlasma.style.left = mouseX + 'px';
+        cursorPlasma.style.top = mouseY + 'px';
         document.body.style.setProperty('--mx', mouseX + 'px');
         document.body.style.setProperty('--my', mouseY + 'px');
+
+        const now = Date.now();
+        if (now - lastPlasmaTime > 30) {
+            createPlasmaParticle(mouseX, mouseY);
+            lastPlasmaTime = now;
+        }
     });
 
-    (function animateRing() {
-        ringX += (mouseX - ringX) * 0.15;
-        ringY += (mouseY - ringY) * 0.15;
-        cursorRing.style.left = ringX + 'px';
-        cursorRing.style.top = ringY + 'px';
-        requestAnimationFrame(animateRing);
-    })();
+    function createPlasmaParticle(x, y) {
+        const count = Math.floor(Math.random() * 2) + 2;
+        
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'plasma-particle';
+            
+            const color = plasmaColors[Math.floor(Math.random() * plasmaColors.length)];
+            particle.style.background = color;
+            particle.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+            
+            const offsetX = (Math.random() - 0.5) * 40;
+            const offsetY = (Math.random() - 0.5) * 40;
+            particle.style.left = offsetX + 'px';
+            particle.style.top = offsetY + 'px';
+            
+            const size = Math.random() * 8 + 4;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            cursorPlasma.appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) particle.parentNode.removeChild(particle);
+            }, 600);
+        }
+    }
 
     document.querySelectorAll('a, button, input, textarea, .badge, .skill-card, .project-card, .why-card').forEach((el) => {
-        el.addEventListener('mouseenter', () => cursorRing.classList.add('hovered'));
-        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovered'));
+        el.addEventListener('mouseenter', () => {
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            cursorDot.style.boxShadow = '0 0 20px var(--accent), 0 0 30px var(--accent)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursorDot.style.boxShadow = '0 0 10px var(--accent), 0 0 20px var(--accent)';
+        });
     });
 }
 
@@ -137,7 +176,7 @@ if (window.matchMedia('(pointer: fine)').matches) {
 }
 
 /* =========================================
-   4. СТРОКИ КОДА (общий список)
+   4. СТРОКИ КОДА
    ========================================= */
 const codeLines = [
     'def validate(payload):',
@@ -168,7 +207,7 @@ const codeLines = [
 ];
 
 /* =========================================
-   5. ФОНОВЫЙ КОД НА ВСЮ СТРАНИЦУ (снизу вверх)
+   5. ФОНОВЫЙ КОД НА ВСЮ СТРАНИЦУ
    ========================================= */
 (function buildCodeBackground() {
     const bg = document.querySelector('.code-bg');
@@ -252,7 +291,7 @@ if (window.innerWidth > 1280) {
 }
 
 /* =========================================
-   7. ПРОКРУТКА: прогресс-бар + столбцы кода едут вверх
+   7. ПРОКРУТКА: прогресс-бар + столбцы кода
    ========================================= */
 const progressBar = document.getElementById('scrollProgress');
 let lastScrollY = window.scrollY;
@@ -287,7 +326,7 @@ if (toTop) {
 }
 
 /* =========================================
-   9. ПОЯВЛЕНИЕ ПРИ СКРОЛЛЕ + расшифровка заголовков
+   9. ПОЯВЛЕНИЕ ПРИ СКРОЛЛЕ + расшифровка
    ========================================= */
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 
@@ -314,6 +353,8 @@ document.querySelectorAll('.project-card, .skill-card, .why-card, .section-title
 
 /* =========================================
    10. ФОРМА → GOOGLE APPS SCRIPT → TELEGRAM
+       ИСПРАВЛЕНИЕ: показываем успех сразу,
+       так как no-cors не даёт прочитать ответ
    ========================================= */
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwaRRQM_3ct7q01_NidhxpT0PMGfiHjuKYvpwPScLSrHtAYNYEdSdaSZEy-h6QTDhjI/exec';
 const contactForm = document.getElementById('contactForm');
@@ -333,11 +374,14 @@ if (contactForm) {
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(data)
             });
+            // При no-cors мы не можем прочитать ответ, но запрос уходит.
+            // Показываем успех сразу после отправки.
             formStatus.textContent = '✓ Сообщение отправлено! Отвечу в Telegram.';
             formStatus.classList.add('success');
             contactForm.reset();
         } catch (err) {
-            formStatus.textContent = '✗ Ошибка. Напишите напрямую в @katenka74';
+            // Реальная ошибка сети (например, нет интернета)
+            formStatus.textContent = '✗ Ошибка сети. Напишите напрямую в @katenka74';
             formStatus.classList.add('error');
         }
     });
